@@ -15,7 +15,7 @@ const personSchema = new Schema({
   favoriteFoods : { type: [String]}
 });
 
-Person = model(personSchema);
+Person = model("Person", personSchema);
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
