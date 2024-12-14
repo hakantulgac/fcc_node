@@ -11,7 +11,7 @@ const personSchema = new Schema({
     type: String,
     required: true,
   },
-  age: { type: number },
+  age: { type: Number },
   favoriteFoods : { type: [String]}
 });
 
