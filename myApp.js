@@ -1,75 +1,70 @@
-let express = require('express');
-let app = express();
-let bodyParser = require("body-parser");
-require("dotenv").config();
-
-app.use("/public", express.static(__dirname+"/public"));
-app.use((req, res, next)=>{
-    console.log(req.method, req.path,"-", req.ip);
-    next();
-});
-app.use(bodyParser.urlencoded({extended: false}));
-
-app.get("/", (req, res)=>{
-    res.sendFile(__dirname+"/views/index.html");
-});
-
-app.get("/json", (req, res)=>{
-    if(process.env.MESSAGE_STYLE === "uppercase"){
-        res.json({"message": "HELLO JSON"});
-    }else{
-        res.json({"message": "Hello json"});
-    }
-});
-
-app.get("/now", (req, res, next)=>{
-        req.time = new Date().toString();
-        next();
-    }, (req, res)=>{
-        res.json({time: req.time});
-    }
-);
-
-app.get("/:word/echo", (req, res)=>{
-    res.json({echo: req.params.word});
-});
-
-app.route("/name")
-    .get((req, res)=>{
-        res.json({ name: req.query.first+" "+req.query.last});
-    })
-    .post((req, res)=>{
-        res.json({ name: req.body.first+" "+req.body.last});
-    })
+require('dotenv').config();
 
 
+let Person;
 
+const createAndSavePerson = (done) => {
+  done(null /*, data*/);
+};
 
+const createManyPeople = (arrayOfPeople, done) => {
+  done(null /*, data*/);
+};
 
+const findPeopleByName = (personName, done) => {
+  done(null /*, data*/);
+};
 
+const findOneByFood = (food, done) => {
+  done(null /*, data*/);
+};
 
+const findPersonById = (personId, done) => {
+  done(null /*, data*/);
+};
 
+const findEditThenSave = (personId, done) => {
+  const foodToAdd = "hamburger";
 
+  done(null /*, data*/);
+};
 
+const findAndUpdate = (personName, done) => {
+  const ageToSet = 20;
 
+  done(null /*, data*/);
+};
 
+const removeById = (personId, done) => {
+  done(null /*, data*/);
+};
 
+const removeManyPeople = (done) => {
+  const nameToRemove = "Mary";
 
+  done(null /*, data*/);
+};
 
+const queryChain = (done) => {
+  const foodToSearch = "burrito";
 
+  done(null /*, data*/);
+};
 
+/** **Well Done !!**
+/* You completed these challenges, let's go celebrate !
+ */
 
+//----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
- module.exports = app;
+exports.PersonModel = Person;
+exports.createAndSavePerson = createAndSavePerson;
+exports.findPeopleByName = findPeopleByName;
+exports.findOneByFood = findOneByFood;
+exports.findPersonById = findPersonById;
+exports.findEditThenSave = findEditThenSave;
+exports.findAndUpdate = findAndUpdate;
+exports.createManyPeople = createManyPeople;
+exports.removeById = removeById;
+exports.removeManyPeople = removeManyPeople;
+exports.queryChain = queryChain;
