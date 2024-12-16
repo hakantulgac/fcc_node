@@ -80,7 +80,9 @@ const findEditThenSave = (personId, done) => {
     if(err){
       done(err);
     }else{
-      data = {...data, favoriteFoods: [...favoriteFoods, foodToAdd]};
+      let foods = data.favoriteFoods;
+      foods.push(foodToAdd);
+      data.favoriteFoods = foods;
       done(null, data);
     }
   })
