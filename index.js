@@ -25,17 +25,17 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:date", function (req, res) {
   const date = new Date(req.params.date);
+  const invalid = "Invalid Date"
   let utc = "";
   let unix = "";
 
-  if(req.params.date.includes("-")){
+  if(String(date) !== invalid){
     utc = date.toUTCString();
     unix = Date.parse(utc);
   }else{
     unix = Number(req.params.date);
     utc = new Date(unix).toUTCString();
   }
-  const invalid = "Invalid Date"
 
   utc === invalid ? res.json({error : invalid}) : res.json({unix, utc});
 });
