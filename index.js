@@ -2,51 +2,33 @@
 // where your node app starts
 
 // init project
+require('dotenv').config();
 var express = require('express');
 var app = express();
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
-// so that your API is remotely testable by FCC 
+// so that your API is remotely testable by FCC
 var cors = require('cors');
-app.use(cors({optionsSuccessStatus: 200}));  // some legacy browsers choke on 204
+app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 204
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function (req, res) {
+app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+// your first API endpoint...
+app.get('/api/hello', function (req, res) {
+  res.json({ greeting: 'hello API' });
 });
 
-app.get("/api/:date", function (req, res) {
-  const date = new Date(req.params.date);
-  const invalid = "Invalid Date"
-  let utc = "";
-  let unix = "";
-
-  if(String(date) !== invalid){
-    utc = date.toUTCString();
-    unix = Date.parse(utc);
-  }else{
-    unix = Number(req.params.date);
-    utc = new Date(unix).toUTCString();
-  }
-
-  utc === invalid ? res.json({error : invalid}) : res.json({unix, utc});
+app.get('/api/whoami', function (req, res) {
+  res.json({ "ipaddress": req.ip });
 });
 
-app.get("/api/", function (req, res) {
-  const utc = new Date().toUTCString();
-  unix = Date.parse(utc);
-  res.json({unix, utc});
-});
-
-// Listen on port set in environment variable or default to 3000
+// listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
