@@ -41,12 +41,27 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
     duration = Number(duration);
 
     const {username} = await people.findOne({_id});
-    await exercises.insertOne({username, date, duration, description})
+    await exercises.insertOne({userId: _id, username, date, duration, description})
 
     res.json({_id, username, date, duration, description})
   }else{
     res.send("error");
   }
+});
+
+app.get('/api/users/:_id/logs', async (req, res) => {
+  const userId = new ObjectId(req.params._id);
+  const exercisesForUser = await exercises.find({userId}).toArray();
+  res.json({
+    _id: exercisesForUser[0].userId,
+    username: exercisesForUser[0].username,
+    count: exercisesForUser.length,
+    log: exercisesForUser.map(i=>({
+      description: i.description,
+      duration: i.duration,
+      date: i.date
+    }))
+  });
 });
 
 const listener = app.listen(process.env.PORT || 3000, () => {
