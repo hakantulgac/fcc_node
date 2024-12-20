@@ -55,15 +55,15 @@ app.get('/api/users/:_id/logs', async (req, res) => {
   const {from, to} = req.query;
 
   let exercisesForUser = await exercises.find({userId}).toArray();
-  
-  const limitedExercise = limit ? exercisesForUser.filter((item, i)=>i<limit) : exercisesForUser;
-  const dateRangedExercise = from && to ? limitedExercise.filter(i => new Date(from) < new Date(i.date) && new Date(to) > new Date (i.date)) : limitedExercise
+
+  const dateRangedExercise = from && to ? exercisesForUser.filter(i => new Date(from) < new Date(i.date) && new Date(to) > new Date (i.date)) : exercisesForUser
+  const limitedExercise = limit ? dateRangedExercise.filter((item, i)=>i<limit) : dateRangedExercise;
 
   res.json({
-    _id: dateRangedExercise[0].userId,
-    username: dateRangedExercise[0].username,
-    count: dateRangedExercise.length,
-    log: dateRangedExercise.map(i=>({
+    _id: limitedExercise[0].userId,
+    username: limitedExercise[0].username,
+    count: limitedExercise.length,
+    log: limitedExercise.map(i=>({
       description: i.description,
       duration: i.duration,
       date: i.date
